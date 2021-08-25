@@ -1,6 +1,8 @@
 
-\documentclass[journal,12pt,twocolumn]{IEEEtran}
 
+\documentclass[journal,12pt,twocolumn]{IEEEtran}
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{forest}
 \usepackage{setspace}
 \usepackage{gensymb}
 \singlespacing
@@ -139,7 +141,6 @@ https://github.com/harshagv9/C_DataStructures/blob/main/assignment1.tex
 (Q 49) Consider the following ANSI C program.
 \begin{lstlisting}
 #include <stdio.h>
-
 int foo(int x,int y, int q)
 {
     if ((x<=0) && (y <= 0)) 
@@ -150,7 +151,6 @@ int foo(int x,int y, int q)
         return foo(x-q, y, q);
     return foo(x, y-q, q) + foo(x-q, y, q);
 }
-
 int main()
 {
     int r = foo(15,15,10);
@@ -167,7 +167,6 @@ Answer : 60
 \newline
 \newline
 This is a problem involving recursion.
-
 The function foo gets executed recursively until the values of x and y are negative in the foo function and finally returns the value of q. Hence final value of output depends on the number of recursive foo functions at the end. 
 \newline
 \newline
@@ -175,12 +174,10 @@ The function foo gets executed recursively until the values of x and y are negat
 \newline
 \newline
 \newline
-
 Initally at x = 15, y = 15, the inside block gets neglected and again foo functions gets executed.
 \newline
 \newline
 Now two foo functions each with x,y are (5, 15),  (15, 5) are executed.
-
 foo(15,15,10) =  foo(5,15,10) + foo(15,5,10)
 \newline
 \newline
@@ -206,5 +203,47 @@ foo(15,-5,10)  = foo(5,-5,10)  = foo(-5,-5,10) = 10
 \newline
 \newline
 Hence adding the return values of all foo functions result = 60
+\newline
+\newline
+\textbf{Mathematical Analysation}
+\newline
+\newline
+This problem can be viewed as no of unique paths down the tree one has to travel so to get basic unit pair of numbers. i.e, the no of combinations for each pair taken a single number and obtaining the remainder each time until we get basic pair of least negative numbers.
 
+
+
+\newpage
+
+  \tikzset{
+    every label/.append style={font=\scriptsize},
+    my edge labels/.style={font=\scriptsize},
+    dominant/.append style={label=below:$dominant$},
+  }
+  \begin{forest}
+    for tree={
+      circle,
+      draw,
+      minimum width=2.5em,
+      l sep+=1.5em,
+      s sep+=1em,
+      anchor=center,
+      edge path={
+        \noexpand\path[\forestoption{edge}](!u.parent anchor)--(.child anchor)[my edge labels]\forestoption{edge label};
+      },
+    },
+    delay={
+      where n=1{
+        edge label/.wrap 2 pgfmath args={
+          node[midway, left]{}}{level}{n}
+      }{
+        edge label/.wrap 2 pgfmath args={
+          node[midway, right]{}}{level}{n}
+      },
+    }
+    [10 [15 15 [5 15 [-5 15 [-5 5[-5 -5] ] ][5 5[-5 5[-5 -5]][5 -5[-5 -5]]] ] [15 5 [5 5[-5 5[-5 -5]] [5 -5[-5 -5]]][15 -5 [5 -5[-5 -5] ]] ] ]]
+  \end{forest}
+  
+  
+
+\end{document}
 \end{document}
