@@ -1,6 +1,7 @@
-
-
 \documentclass[journal,12pt,twocolumn]{IEEEtran}
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 \documentclass[tikz,border=5pt]{standalone}
 \usepackage{forest}
 \usepackage{setspace}
@@ -209,16 +210,26 @@ Hence adding the return values of all foo functions result = 60
 \newline
 \newline
 This problem can be viewed as no of unique paths down the tree one has to travel so to get basic unit pair of numbers. i.e, the no of combinations for each pair taken a single number and obtaining the remainder each time until we get basic pair of least negative numbers.
-
-
-
 \newpage
-
   \tikzset{
     every label/.append style={font=\scriptsize},
     my edge labels/.style={font=\scriptsize},
     dominant/.append style={label=below:$dominant$},
   }
+  
+  
+  For any two random integers x,y the answer will always be some mulitple of q
+given by following equation foo(x, y, q) 
+
+
+\begin{equation*}
+  foo(x,y,q) = ({\dfrac{( \ceil*{\frac{x}{q}} + \ceil*{\frac{y}{q}} ) ! } {(\ceil*{\frac{x}{q}} !)( \ceil*{\frac{y}{q}}! ) }}) * q
+\end{equation*}
+
+
+\newline
+\newline
+
   \begin{forest}
     for tree={
       circle,
@@ -244,6 +255,5 @@ This problem can be viewed as no of unique paths down the tree one has to travel
   \end{forest}
   
   
-
 \end{document}
 \end{document}
